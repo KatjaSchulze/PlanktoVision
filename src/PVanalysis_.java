@@ -1,6 +1,8 @@
 /**
 Copyright (C) 2012  Katja Schulze (kschulze@th-wildau.de)
 
+All other copyrights are the property of their respective owners.
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
