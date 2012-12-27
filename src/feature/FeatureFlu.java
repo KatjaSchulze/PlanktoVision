@@ -1,0 +1,42 @@
+package feature;
+public interface FeatureFlu {
+	public static final long 
+
+		PE_MEAN_NORM = 1L<<0,
+		PE_MEAN= 1L<<1,
+		PE_MODE= 1L<<2,
+		PE_MIN= 1L<<3,
+		PE_MAX= 1L<<4,
+		PE_STDDEV= 1L<<5,
+		PE_FLUPARTS= 1L<<6,
+		PC_MEAN_NORM= 1L<<7,
+		PC_MEAN= 1L<<8,
+		PC_MODE= 1L<<9,
+		PC_MIN= 1L<<10,
+		PC_MAX= 1L<<11,
+		PC_STDDEV= 1L<<12,
+		PC_FLUPARTS= 1L<<13,
+		CHL_MEAN_NORM= 1L<<14,
+		CHL_MEAN= 1L<<15,
+		CHL_MODE= 1L<<16,
+		CHL_MIN= 1L<<17,
+		CHL_MAX= 1L<<18,
+		CHL_STDDEV= 1L<<19,
+		CHL_FLUPARTS= 1L<<20,
+		REDFLU_MEAN= 1L<<21,
+		REDFLU_MODE= 1L<<22,
+		REDFLU_MAX= 1L<<23,
+		REDFLU_MIN= 1L<<24,
+		REDFLU_STDDEV= 1L<<25,
+		GREENFLU_MEAN= 1L<<26,
+		GREENFLU_MODE= 1L<<27,
+		GREENFLU_MAX= 1L<<28,
+		GREENFLU_MIN= 1L<<29,
+		GREENFLU_STDDEV= 1L<<30,
+		HUFLU_MEAN= 1L<<31,
+		HUFLU_MODE= 1L<<32,
+		HUFLU_MAX= 1L<<33,
+		HUFLU_MIN= 1L<<34,
+		HUFLU_STDDEV= 1L<<35;
+
+}
