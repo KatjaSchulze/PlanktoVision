@@ -40,16 +40,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.LookupPaintScale;
-import org.jfree.chart.renderer.xy.ClusteredXYBarRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+//import org.jfree.chart.ChartFactory;
+//import org.jfree.chart.ChartPanel;
+//import org.jfree.chart.JFreeChart;
+//import org.jfree.chart.plot.PlotOrientation;
+//import org.jfree.chart.plot.XYPlot;
+//import org.jfree.chart.renderer.LookupPaintScale;
+//import org.jfree.chart.renderer.xy.ClusteredXYBarRenderer;
+//import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+//import org.jfree.data.xy.XYSeries;
+//import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * <h2>Usage</h2> This plugin is used to infer the preferred orientation of
@@ -680,115 +680,115 @@ public class Directionality {
 	 * @return  a {@link JFrame} containing the histogram plots, which setVisible(boolean) method must
 	 * be called in order to be displayed
 	 */
-	public JFrame plotResults() {
-		final XYSeriesCollection histogram_plots = new XYSeriesCollection();
-		final LookupPaintScale lut = createLUT(histograms.size());
-		final String[] names = makeNames();
-		XYSeries series;
-		
-		// Shift histograms
-		
-		// Wrap shifting angle to [-90  90[
-		double wrapped_angle = ((bin_start+90)  % 180 + 180) % 180 - 90;
-		int wrap_index = 0;
-		for (int i = 0; i < bins.length; i++) {
-			if (wrapped_angle <= Math.toDegrees(bins[i])) {
-				wrap_index = i;
-				break;				
-			}
-		}
-		
-		// Wrap bins
-		double[] wrapped_bins = new double[nbins];
-		for (int i = 0; i < wrapped_bins.length; i++) {
-			wrapped_bins[i] = Math.toDegrees(bins[wrap_index] + (bins[1]-bins[0])*i);
-		}
-		
-		// This is where we shift histograms
-		double[] dir;
-		for (int i = 0; i < histograms.size(); i++) {
-			dir = histograms.get(i);
-			series = new XYSeries(names[i]);
-			int index = 0;
-			for (int j = wrap_index; j < nbins; j++) { 
-				series.add(wrapped_bins[index], dir[j]);
-				index++;
-			}
-			for (int j = 0; j < wrap_index; j++) { 
-				series.add(wrapped_bins[index], dir[j]);
-				index++;
-			}
-			histogram_plots.addSeries(series);
-		}
-		histogram_plots.setIntervalWidth(Math.toDegrees(bins[1]-bins[0]));
-		
-		// Create chart with histograms
-		final JFreeChart chart = ChartFactory.createHistogram("Directionality histograms", "Direction (º)", "Amount", 
-				histogram_plots, 
-				PlotOrientation.VERTICAL,
-				true,
-				true,
-				false);
-		
-		// Set the look of histograms
-		final XYPlot plot = (XYPlot) chart.getPlot();
-		final ClusteredXYBarRenderer renderer = new ClusteredXYBarRenderer(0.3, false);
-		float color_index;
-		for (int i = 0; i < histograms.size(); i++) {
-			color_index = (float)i/(float)(histograms.size()-1);
-			renderer.setSeriesPaint(i, lut.getPaint(color_index) );
-		}
-		plot.setRenderer(0, renderer);
-		
-		// Draw fit results
-		if (null != params_from_fit) {
-			// Make new X
-			final double[] X = new double[bins.length*10]; // oversample 10 times
-			for (int i = 0; i < X.length; i++) {
-				X[i] = (wrapped_bins[0] + (wrapped_bins[nbins-1]-wrapped_bins[0])/X.length * i);
-			}
-			// Create dataset
-			final XYSeriesCollection fits = new XYSeriesCollection();
-			XYSeries fit_series;
-			double val, center, xn;
-			double[] params;
-			final double half_range = Math.PI/2;
-			for (int i = 0; i < histograms.size(); i++) { // we have to deal with periodic issue here too
-				params = params_from_fit.get(i).clone();
-				center = params[2];
-				fit_series = new XYSeries(names[i]);
-				for (int j = 0; j < X.length; j++) {
-					xn = Math.toRadians(X[j]); // back to radians, for the fit
-					if (Math.abs(xn-center) > half_range ) { // too far
-						if (xn>center) {
-							xn = xn - 2*half_range;							
-						} else {
-							xn = xn + 2*half_range;
-						}
-					}
-					val = CurveFitter.f(CurveFitter.GAUSSIAN, params, xn);
-					fit_series.add(X[j], val);
-				}
-				fits.addSeries(fit_series);
-			}
-			plot.setDataset(1, fits);
-			plot.setRenderer(1, new XYLineAndShapeRenderer(true, false));
-			for (int i = 0; i < histograms.size(); i++) {
-				color_index = (float)i/(float)(histograms.size()-1);
-				plot.getRenderer(1).setSeriesPaint(i, lut.getPaint(color_index) );
-			}
-			
-		}
-		plot.getDomainAxis().setRange(wrapped_bins[0], wrapped_bins[nbins-1]);
-		
-		final ChartPanel chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-		JFrame window = new JFrame("Directionality for "+imp.getShortTitle()+" (using "+method.toString()+")");
-        window.add(chartPanel);
-        window.validate();
-        window.setSize(new java.awt.Dimension(500, 270));
-        return window;
-	}
+//	public JFrame plotResults() {
+//		final XYSeriesCollection histogram_plots = new XYSeriesCollection();
+//		final LookupPaintScale lut = createLUT(histograms.size());
+//		final String[] names = makeNames();
+//		XYSeries series;
+//		
+//		// Shift histograms
+//		
+//		// Wrap shifting angle to [-90  90[
+//		double wrapped_angle = ((bin_start+90)  % 180 + 180) % 180 - 90;
+//		int wrap_index = 0;
+//		for (int i = 0; i < bins.length; i++) {
+//			if (wrapped_angle <= Math.toDegrees(bins[i])) {
+//				wrap_index = i;
+//				break;				
+//			}
+//		}
+//		
+//		// Wrap bins
+//		double[] wrapped_bins = new double[nbins];
+//		for (int i = 0; i < wrapped_bins.length; i++) {
+//			wrapped_bins[i] = Math.toDegrees(bins[wrap_index] + (bins[1]-bins[0])*i);
+//		}
+//	
+//		// This is where we shift histograms
+//		double[] dir;
+//		for (int i = 0; i < histograms.size(); i++) {
+//			dir = histograms.get(i);
+//			series = new XYSeries(names[i]);
+//			int index = 0;
+//			for (int j = wrap_index; j < nbins; j++) { 
+//				series.add(wrapped_bins[index], dir[j]);
+//				index++;
+//			}
+//			for (int j = 0; j < wrap_index; j++) { 
+//				series.add(wrapped_bins[index], dir[j]);
+//				index++;
+//			}
+//			histogram_plots.addSeries(series);
+//		}
+//		histogram_plots.setIntervalWidth(Math.toDegrees(bins[1]-bins[0]));
+//		
+//		// Create chart with histograms
+//		final JFreeChart chart = ChartFactory.createHistogram("Directionality histograms", "Direction (º)", "Amount", 
+//				histogram_plots, 
+//				PlotOrientation.VERTICAL,
+//				true,
+//				true,
+//				false);
+//		
+//		// Set the look of histograms
+//		final XYPlot plot = (XYPlot) chart.getPlot();
+//		final ClusteredXYBarRenderer renderer = new ClusteredXYBarRenderer(0.3, false);
+//		float color_index;
+//		for (int i = 0; i < histograms.size(); i++) {
+//			color_index = (float)i/(float)(histograms.size()-1);
+//			renderer.setSeriesPaint(i, lut.getPaint(color_index) );
+//		}
+//		plot.setRenderer(0, renderer);
+//		
+//		// Draw fit results
+//		if (null != params_from_fit) {
+//			// Make new X
+//			final double[] X = new double[bins.length*10]; // oversample 10 times
+//			for (int i = 0; i < X.length; i++) {
+//				X[i] = (wrapped_bins[0] + (wrapped_bins[nbins-1]-wrapped_bins[0])/X.length * i);
+//			}
+//			// Create dataset
+//			final XYSeriesCollection fits = new XYSeriesCollection();
+//			XYSeries fit_series;
+//			double val, center, xn;
+//			double[] params;
+//			final double half_range = Math.PI/2;
+//			for (int i = 0; i < histograms.size(); i++) { // we have to deal with periodic issue here too
+//				params = params_from_fit.get(i).clone();
+//				center = params[2];
+//				fit_series = new XYSeries(names[i]);
+//				for (int j = 0; j < X.length; j++) {
+//					xn = Math.toRadians(X[j]); // back to radians, for the fit
+//					if (Math.abs(xn-center) > half_range ) { // too far
+//						if (xn>center) {
+//							xn = xn - 2*half_range;							
+//						} else {
+//							xn = xn + 2*half_range;
+//						}
+//					}
+//					val = CurveFitter.f(CurveFitter.GAUSSIAN, params, xn);
+//					fit_series.add(X[j], val);
+//				}
+//				fits.addSeries(fit_series);
+//			}
+//			plot.setDataset(1, fits);
+//			plot.setRenderer(1, new XYLineAndShapeRenderer(true, false));
+//			for (int i = 0; i < histograms.size(); i++) {
+//				color_index = (float)i/(float)(histograms.size()-1);
+//				plot.getRenderer(1).setSeriesPaint(i, lut.getPaint(color_index) );
+//			}
+//			
+//		}
+//		plot.getDomainAxis().setRange(wrapped_bins[0], wrapped_bins[nbins-1]);
+//		
+//		final ChartPanel chartPanel = new ChartPanel(chart);
+//		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+//		JFrame window = new JFrame("Directionality for "+imp.getShortTitle()+" (using "+method.toString()+")");
+//        window.add(chartPanel);
+//        window.validate();
+//        window.setSize(new java.awt.Dimension(500, 270));
+//        return window;
+//	}
 	
 	/**
 	 * This method tries to fit a gaussian to the highest peak of each directionality histogram, 
@@ -1779,32 +1779,32 @@ public class Directionality {
 	 * @param ncol  the number of colors in the LUT
 	 * @return  the LUT
 	 */
-	protected static final LookupPaintScale createLUT(final int ncol) {
-		final float[][] colors = new float[][]  { 
-				{0, 75/255f, 150/255f},
-				{0.1f, 0.8f, 0.1f},
-				{150/255f, 75/255f, 0}
-		};
-		final float[] limits = new float[] {0, 0.5f, 1};
-		final LookupPaintScale lut = new LookupPaintScale(0, 1, Color.BLACK);
-		float val;
-		float r, g, b;
-		for (int j = 0; j < ncol; j++) {			
-			val = (float)j/(float)(ncol-0.99f);
-			int i = 0;
-			for (i = 0; i < limits.length; i++) {
-				if (val < limits[i]) {
-					break;
-				}
-			}
-			i = i - 1;
-			r = colors[i][0] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][0]-colors[i][0]); 
-			g = colors[i][1] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][1]-colors[i][1]); 
-			b = colors[i][2] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][2]-colors[i][2]); 
-			lut.add(val, new Color(r, g, b));
-		}
-		return lut;
-	}
+//	protected static final LookupPaintScale createLUT(final int ncol) {
+//		final float[][] colors = new float[][]  { 
+//				{0, 75/255f, 150/255f},
+//				{0.1f, 0.8f, 0.1f},
+//				{150/255f, 75/255f, 0}
+//		};
+//		final float[] limits = new float[] {0, 0.5f, 1};
+//		final LookupPaintScale lut = new LookupPaintScale(0, 1, Color.BLACK);
+//		float val;
+//		float r, g, b;
+//		for (int j = 0; j < ncol; j++) {			
+//			val = (float)j/(float)(ncol-0.99f);
+//			int i = 0;
+//			for (i = 0; i < limits.length; i++) {
+//				if (val < limits[i]) {
+//					break;
+//				}
+//			}
+//			i = i - 1;
+//			r = colors[i][0] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][0]-colors[i][0]); 
+//			g = colors[i][1] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][1]-colors[i][1]); 
+//			b = colors[i][2] + (val-limits[i])/(limits[i+1]-limits[i])*(colors[i+1][2]-colors[i][2]); 
+//			lut.add(val, new Color(r, g, b));
+//		}
+//		return lut;
+//	}
 	
 	/*
 	 * MAIN METHOD
