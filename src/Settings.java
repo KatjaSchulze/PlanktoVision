@@ -50,7 +50,7 @@ public class Settings {
 		}
 		
 	static void loadPreferences() {
-			String path = Prefs.getString(".dir.plankton")+networkName+"_pref.txt";
+			String path = Prefs.getString(".dir.plankton")+"/networks/"+networkName+"_pref.txt";
 			boolean ok =  loadPrefs(path);
 //			if (!ok && !IJ.isWindows()) {
 //				path = System.getProperty("user.home")+separator+PREFS_NAME;

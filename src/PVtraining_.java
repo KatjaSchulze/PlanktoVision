@@ -94,7 +94,7 @@ public class PVtraining_ implements PlugIn, Measurements {
 			workDir = Prefs.getString(".dir.plankton");
 		}
 		else{
-			IJ.showMessage("Please define your working directory under Plugins>PVsettings");
+			IJ.showMessage("Please define your working directory under Plugins>PlanktoVision>PVsettings");
 			return;
 		}
 		
@@ -711,7 +711,7 @@ public class PVtraining_ implements PlugIn, Measurements {
 		// save the normalization
 		System.out.println("Saving norm");
 		try {
-			SerializeObject.save(new File (workDir+""+Settings.networkName+"_norm.ser"), norm);
+			SerializeObject.save(new File (workDir+"/networks/"+Settings.networkName+"_norm.ser"), norm);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -731,7 +731,7 @@ public class PVtraining_ implements PlugIn, Measurements {
 	    else if (FR instanceof PlugInFrame)	((PlugInFrame)FR).close(); 
 	    
 	    //save the network
-		EncogDirectoryPersistence.saveObject(new File(workDir+""+Settings.networkName), network);
+		EncogDirectoryPersistence.saveObject(new File(workDir+"/networks/"+Settings.networkName), network);
 		
 		props.put("feature", Integer.toString(feature));
 		props.put("fluorescence", Long.toString(flu));
@@ -742,7 +742,7 @@ public class PVtraining_ implements PlugIn, Measurements {
 		props.put("input", Integer.toString(input));
 		props.put("output", Integer.toString(output));
 		try {
-			Settings.savePrefs(props, workDir+""+Settings.networkName+"_pref.txt");
+			Settings.savePrefs(props, workDir+"/networks/"+Settings.networkName+"_pref.txt");
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();

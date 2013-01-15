@@ -76,7 +76,7 @@ public class PVsegment_ implements PlugIn {
 			workDir = Prefs.getString(".dir.plankton");
 		}
 		else{
-			IJ.showMessage("Please define your working directory under Plugins>PVsettings");
+			IJ.showMessage("Please define your working directory under Plugins>PlanktoVision>PVsettings");
 			return;
 		}
 		

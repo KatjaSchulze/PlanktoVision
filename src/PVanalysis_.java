@@ -107,7 +107,7 @@ public class PVanalysis_ implements PlugIn {
 			workDir = Prefs.getString(".dir.plankton");
 		}
 		else{
-			IJ.showMessage("Please define your working directory under Plugins>PVsettings");
+			IJ.showMessage("Please define your working directory under Plugins>PlanktoVision>PVsettings");
 			return;
 		}
 		
@@ -188,7 +188,7 @@ public class PVanalysis_ implements PlugIn {
 			else{
 			//load the normalisation & the network
 			//===================================================================================================================================
-			odnw = new OpenDialog("Choose the second network", workDir, "");
+			odnw = new OpenDialog("Choose the second network", workDir+"/networks/", "");
 			if (odnw.getFileName() == null)return;
 			Settings.networkName = odnw.getFileName();
 			

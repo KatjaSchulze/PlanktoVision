@@ -59,6 +59,7 @@ public class PVsettings_ implements PlugIn {
 				else{
 					new File (workDir+"/results").mkdir();
 					new File (workDir+"/pictures").mkdir(); 
+					new File (workDir+"/networks").mkdir();
 					
 					Prefs.set("dir.plankton", workDir);
 					Prefs.savePreferences();
@@ -75,6 +76,8 @@ public class PVsettings_ implements PlugIn {
 			if (!result.exists())result.mkdir();
 			File picture = new File (workDir+"/pictures");
 			if (!picture.exists())picture.mkdir();
+			File network = new File (workDir+"/networks");
+			if (!network.exists())picture.mkdir();
 			
 			//Save workdir
 			Prefs.set("dir.plankton", workDir);

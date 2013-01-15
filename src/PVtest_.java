@@ -20,9 +20,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -70,7 +73,7 @@ public class PVtest_ implements PlugIn {
 			workDir = Prefs.getString(".dir.plankton");
 		}
 		else{
-			IJ.showMessage("Please define your working directory under Plugins>PVsettings");
+			IJ.showMessage("Please define your working directory under Plugins>PlanktoVision>PVsettings");
 			return;
 		}
 		
@@ -93,7 +96,7 @@ public class PVtest_ implements PlugIn {
 		
 		//load the normalisation & the network
 		//===================================================================================================================================
-		OpenDialog odnw = new OpenDialog("Choose your network", workDir, "");
+		OpenDialog odnw = new OpenDialog("Choose your network", workDir+"/networks/", "");
 		if (odnw.getFileName() == null)return;
 		Settings.networkName = odnw.getFileName();
 		
@@ -175,6 +178,10 @@ public class PVtest_ implements PlugIn {
 					imageList[j] = imageList[j].substring(0, imageList[j].length()-4);
 					rt = ResultsTable.open(workDir+"results/"+imageList[j]+".xls");
 					rt.show("Results");
+					
+					IJ.wait(50);
+					
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
