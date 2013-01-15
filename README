@@ -1,0 +1,89 @@
+***************************************************************************************************************
+Installation 
+***************************************************************************************************************
+
+- Download and install ImageJ Version 1.45 from http://imagej.nih.gov/ij/download/ (The plugin was only tested with Version 1.45) 
+
+- Download encoc-core-xxx from https://github.com/encog/encog-java-core/downloads and copy encoc-core-xxx.jar into the ImageJ folder IJ/plugins/jars 
+
+- Download jtransforms-2.4.jar from http://sourceforge.net/projects/jtransforms/files/jtransforms/2.4/ and copy the file into the ImageJ folder IJ/plugins/jars 
+
+- Download PlanktoVision_.jar from https://github.com/KatjaSchulze/PlanktoVision and copy the file into the ImageJ folder IJ/plugins 
+
+- Start ImageJ 
+
+***************************************************************************************************************
+Usage 
+***************************************************************************************************************
+
+The plugin can be found under the sub menu 'Plugins>PlanktoVision' and is divided into the 5 parts PVsettings, PVsegment, PVtraining, PVtest & PVanalysis. 
+
+1. PVsettings
+
+If you run the plugin for the first time PVsettings must be run at first to set the workspace. Once it is set, the results of all plugin parts are stored here. 
+If you want to change your workspace run PVsettings again and choose a new (or already existing) workspace. 
+
+2. PVsegment
+
+This part has to be used for the creation of a trainings set. The organisms in the microscopic images are segmented from the background and stored under '[your workspace]/pictures' as single pictures. Additionally all features are calculated for every organisms and stored under '[your workspace]/results'. 
+
+The program identifies the different types of pictures based on the file name. To allow a correct functionality the names of the pictures have to contain the following sequences of characters: 
+
+bright field image: _H_ 
+quick full focus image: _QFF_ 
+fluorescence image of phycoerythrin: _PE_ 
+fluorescence image of phycocyanin: _PC_ 
+fluorescence image of phlorophyll: _CHL_ 
+
+The program is only working when bright field or qff images are present. Images for fluorescence are optional but allow a better training and classification. 
+
+3. PVtraining 
+ 
+With this part of the plugin a neural network is created and trained. To allow this, a trainings set has to be created. For this the pictures of the single organisms (which were created with PVsegment) have to be sorted into different classes. 
+This can be done by creating different folders (where every folder represents one class) and sorting the pictures into the different folders. All class folders have to be in the same main directory. The class folder names have to be numbered without gaps beginning from 0.
+
+The training is started by choosing the program part PVtraining. In a first dialog you have to choose which features should be used for the training. 
+In a second dialog the structure of the network has to be defined. Under "class" the number of classes that should be differentiate has to be specified.
+The next two fields define the inner structure of the network which consist of hidden layers. With the numbers in these fields one can define the number of neurons in the two layers. Additionally it is possible to use only one hidden layer. For this the number of neurons of the second layer has to be set to 0.  
+In the last field  the name under which the network is stored can be chosen. An already existing network with the same name will be overwritten!! 
+In the next dialog the directory which contains the training set has to be chosen. 
+Afterwards the training starts. At first the feature for the organisms of the different classes are read and then a training dialog appears. The dialog allows to stop the training when a desired error rate is achieved. Afterwards the trained network is stored in the workspace. 
+
+4. PVtest 
+
+PVtest allows to test the trained network with single pictures. Either one can use the training set to check the training in more detail or one can create a sorted test set (with the same structure as the training set) to evaluate the neural network with new data. 
+
+In the first dialog of PVtest the trained network has to be chosen from the workspace. In a second dialog the main folder of the test or training set has to be chosen. Afterwards the test classification is started. In the end a classification matrix is shown in a log window. The horizontal line represents the real class and the vertical line shows classification results achieved with the chosen network.  
+
+5. PVanalysis 
+
+With this part of the plugin it is possible to classify organisms in microscopic images with a trained network. After "PVanalysis" is started the network has to be chosen (The networks are stored in the workspace). 
+In a second dialog names and the colors with which the particles in the classified image are marked can be chosen for every class. 
+Afterwards the images that should be analyzed have to be selected. 
+The analysis starts and the images are segmented, needed features calculated, and the single particles classified and marked according to the classification results. 
+  
+All classification results are displayed in a log-window when the analysis of all images is completed. 
+
+***************************************************************************************************************
+Test Set
+***************************************************************************************************************
+
+In order to test the PlanktoVision Plugin the archive 'TestData.zip' contains images for already segmented particles from mixed samples that contained 10 different organisms.
+
+The zip-file consist of: 
+
+1. Folder 'picture_test' which contains the images of the segmented particles
+2. Feature.zip which contains the calculated features for the segmented particles
+3. Network.zip which contains a trained network to classify the data
+
+In order to use the test set: 
+
+- Extract the files from 'Feature.zip' into your '[your workspace]/results' directory
+- Extract the files from 'Network.zip' into your '[your workspace]/networks' directory
+- start ImageJ
+- select Plugins>PlanktoVision>PVtest
+- choose if the images should be sorted under '[your workspace]/Sorted'
+- choose the trained network (network_10taxa) under '[your workspace]/networks'
+- choose the 'picture_test' Folder
+- the classification of the test set starts
+ 
