@@ -4,7 +4,7 @@ Installation
 
 - Download and install ImageJ Version 1.45 from http://imagej.nih.gov/ij/download/ (The plugin was only tested with Version 1.45) 
 
-- Download encoc-core-xxx from https://github.com/encog/encog-java-core/downloads and copy encoc-core-xxx.jar into the ImageJ folder IJ/plugins/jars 
+- Download encog-core-xxx from https://github.com/encog/encog-java-core/downloads and copy encog-core-xxx.jar into the ImageJ folder IJ/plugins/jars 
 
 - Download jtransforms-2.4.jar from http://sourceforge.net/projects/jtransforms/files/jtransforms/2.4/ and copy the file into the ImageJ folder IJ/plugins/jars 
 
